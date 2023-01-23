@@ -1,19 +1,15 @@
 class DFS:
     # Basado en https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/
     def __init__(self, matrix):
-        self.visited = []
+        self.visitado = []
         self.stack = []
 
         self.graph = [[] for i in range((len(matrix)) * len(matrix))]
 
-    def dfs(self, v, visitados):
-
-        visitados.add(v)
-        print(v, end=" ")
-
-        for v in self.grafo[v]:
-            if v not in visitados:
-                self.dfs(v, visitados)
+    def dfs(self, v, grafo):
+        if v not in self.visitado:
+            for i in g[v]:
+                self.dfs(g, i)
 
     def algoritmo(self):
 
