@@ -17,7 +17,7 @@ import numpy as np
 from pixelate import *
 
 # Constantes
-Pixel = 20
+Pixel = 15
 path = "l1.bmp"
 # Se llama a funcion de pixelate, recibiendo como parametro la imagen input, la imagen output y el tamaño de los pixeles.
 pixelate(path, "l11.bmp", Pixel)
