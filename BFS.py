@@ -7,6 +7,13 @@ class BFS():
         self.graph = [[] for i in range((len(matrix)) * len(matrix))]
 
         inicio, fin, v = self.gen_relaciones(matrix)
+        print('v: ',v)
+        print('inicio: ',inicio)
+        print('fin: ',fin)
+        for x in self.MtoGtoM:
+            print(x)
+        for x in self.graph:
+            print(x)
 
         self.conseguir_ruta(inicio, fin, v)
 
@@ -39,9 +46,9 @@ class BFS():
 
         # CORREGIR CORREGIR
         while (pred[crawl] != -1):
-            print(pred[crawl])
             path.append(pred[crawl])
             crawl = pred[crawl]
+            # print(crawl)
 
         print("Camino corto tamaño: ", dist[fin])
         for x in range(len(path) -1, -1, -1):
@@ -54,33 +61,32 @@ class BFS():
         inicio = 0
         fin = 0
         vertices = 0
+        self.MtoGtoM = []
         
         pos = 0
         for x in range(len(matrix)):
+            temp = []
             for y in range(len(matrix[x])):
 
+                temp.append(pos)
+
+                if (matrix[x][y] == 2):
+                    # es el inicio
+                    inicio = (pos)
+
+                if (matrix[x][y] == 3):
+                    # es el fin
+                    fin = (pos)
+
                 if matrix[x][y] != 1:
-                    # Si no es una pared
-
-                    # arriba
-                    try:
-                        if matrix[x - 1][y] != 1:
-                            # si no es una pared
-                            qConected = ((x - 1) * y) + (y + 1) # Número del otro estado
-                            self.añadir_conexión(pos, qConected)
-                            vertices += 1
-
-                    except: 
-                        pass
-                        # El otro estado es una pared, por lo que no se genera 
-                        # conexión
 
                     # abajo
                     try:
                         if matrix[x + 1][y] != 1:
                             # si no es una pared
-                            qConected = ((x - 1) * y) + (y + 1) # Número del otro estado
+                            qConected = ((x + 1) * len(matrix[x])) + (y) # Número del otro estado
                             self.añadir_conexión(pos, qConected)
+                            print('abajo :',pos, qConected)
                             vertices += 1
 
                     except: 
@@ -92,8 +98,9 @@ class BFS():
                     try:
                         if matrix[x][y + 1] != 1:
                             # si no es una pared
-                            qConected = (x * y) + (y + 2) # Número del otro estado
+                            qConected = (x * len(matrix[x])) + (y + 1) # Número del otro estado
                             self.añadir_conexión(pos, qConected)
+                            print('derecha :',pos, qConected)
                             vertices += 1
 
                     except: 
@@ -101,31 +108,9 @@ class BFS():
                         # El otro estado es una pared, por lo que no se genera 
                         # conexión
 
-                    # izquierda
-                    try:
-                        if matrix[x][y - 1] != 1:
-                            # si no es una pared
-                            qConected = (x * y) + (y) # Número del otro estado
-                            self.añadir_conexión(pos, qConected)
-                            vertices += 1
+                pos += 1
 
-                    except: 
-                        pass
-                        # El otro estado es una pared, por lo que no se genera 
-                        # conexión
-
-                    # vertices +=1
-
-                    pos += 1
-
-                if (matrix[x][y] == 2):
-                    # es el inicio
-                    inicio = pos
-
-                if (matrix[x][y] == 3):
-                    # es el inicio
-                    fin = pos
-
+            self.MtoGtoM.append(temp)
                 
 
         return (inicio, fin, vertices)
@@ -156,7 +141,7 @@ class BFS():
 
             for i in range(len(relaciones[u])):
                 if (visitados[relaciones[u][i]] == False):
-                    visitados[relaciones[u][i]] == True
+                    visitados[relaciones[u][i]] = True
                     dist[relaciones[u][i]] = dist[u] + 1
                     pred[relaciones[u][i]] = u
                     cola.append(relaciones[u][i])
@@ -173,17 +158,17 @@ class BFS():
 Test_Matrix = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 1, 0, 0, 0, 2, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 2, 2, 0, 0, 0],
+    [0, 1, 0, 0, 0, 2, 2, 0, 0, 0],
     [0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
-    [0, 0, 0, 2, 0, 0, 2, 0, 0, 0],
-    [0, 0, 0, 2, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 2, 0, 0, 0, 0, 0, 0],
-    [0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 3, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 2, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 2, 1, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 1, 0, 0, 0, 3, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0, 0, 0, 1, 0],
 ]
 
 print('bfs')
 bfs = BFS(Test_Matrix)
-#print(bfs.graph)
+# print(bfs.graph)
 
