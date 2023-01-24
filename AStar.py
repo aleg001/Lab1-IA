@@ -219,6 +219,7 @@ class AStar(Framework):
 
 # ---------- Ejemplo de USO ----------
 
+'''
 path = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 1, 0, 0, 0, 2, 0, 0, 0, 0],
@@ -241,3 +242,4 @@ while not A_instance.goalTests():
   grid = A_instance.results('', '')
   for row in grid:
     print(row)
+'''
