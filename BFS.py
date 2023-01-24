@@ -168,28 +168,30 @@ class BFS(Framework):
         return path_cost
 
 
-Test_Matrix = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 2, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 2, 2, 0, 0, 0],
-    [0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 2, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
-    [0, 2, 0, 0, 0, 2, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 2, 3, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-]
+# Test_Matrix = [
+#     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+#     [0, 0, 1, 0, 0, 2, 0, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 2, 2, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 0, 2, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
+#     [0, 2, 0, 0, 0, 2, 0, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 2, 3, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+# ]
 
-print("bfs")
-bfs = BFS(Test_Matrix)
-for x in bfs.MtoGtoM:
-    print(x)
-path = bfs.path
-for p in path:
-    print(p)
-cost = bfs.pathCost(path)
-print('path cost: ', cost)
+# print("bfs")
+# bfs = BFS(Test_Matrix)
+# for x in bfs.MtoGtoM:
+#     print(x)
+# path = bfs.path
+# for p in path:
+#     print(p)
+# cost = bfs.pathCost(path)
+# print('path cost: ', cost)
 
-# stepCost = bfs.stepCost()
-print('stepCost: ', cost)
+# # stepCost = bfs.stepCost()
+# print('stepCost: ', cost)
+
+# bfs.action("")

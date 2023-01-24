@@ -2,8 +2,11 @@ from Framework import Framework
 from collections import defaultdict
 
 class DFS(Framework):
-    # Basado en https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/
+    # Basado en 
+    # https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/
     # https://www.youtube.com/watch?v=sTRK9mQgYuc&t=0s&ab_channel=LearningOrbis
+    # https://stackabuse.com/courses/graphs-in-python-theory-and-implementation/lessons/depth-first-search-dfs-algorithm/
+
     def __init__(self, matrix):
         self.visitado = []
         self.stack = []
@@ -12,21 +15,10 @@ class DFS(Framework):
 
         inicio, fin, v = self.gen_relaciones(matrix)
 
-        self.path = self.DFS(inicio, fin)
+        self.path = self.results(inicio, fin)
 
-    # def dfs(self, v, grafo):
-    #     if v not in self.visitado:
-    #         for i in g[v]:
-    #             self.dfs(g, i)
-
-    # def algoritmo(self):
-
-    #     visitados = set()
-    #     for v in self.grafo:
-    #         if v not in visitados:
-    #             self.dfs(v, visitados)
-
-    #     return False
+        self.test = self.goalTests(inicio, fin)
+        
 
     def añadir_conexión(self, u, v):
         self.graph[u].append(v)
@@ -92,28 +84,45 @@ class DFS(Framework):
 
         return (inicio, fin, vertices)
 
-    def results(self, s, a) -> int:
-        return super().results(s, a)
+    def goalTests(self, inicio, fin, path=[], visited = set()) -> bool:
+        path.append(inicio)
+        visited.add(inicio)
 
-    def goalTests(self, s) -> bool:
-        return super().goalTests(s)
+        if inicio == fin:
+            return path
+        
+        for n in self.graph[inicio]:
+            if n not in visited:
+                result = self.goalTests(n, fin, path, visited)
+                if result is not None:
+                    return True
+        path.pop()
+        return False
 
     def stepCost(self, **kargs) -> int:
-        return super().stepCost(**kargs)
+        stepCost = 0
+        for s in self.path:
+            stepCost += 1
+        return stepCost
 
     def pathCost(self, s) -> int:
-        return super().pathCost(s)
+        stepCost = 0
+        for p in s:
+            stepCost += 1
+        return stepCost
 
-    def action(self, v, visited):
+    def action(self, v, visited = set()):
         
         visited.add(v)
-        print(v, end=" ")
 
         for n in self.graph[v]:
             if n not in visited:
                 self.action(n, visited)
 
-    def DFS(self, inicio, fin, path=[], visited = set()):
+        return visited
+
+    # Returns array path from inicio to fin
+    def results(self, inicio, fin, path=[], visited = set()):
 
         path.append(inicio)
         visited.add(inicio)
@@ -121,31 +130,39 @@ class DFS(Framework):
         if inicio == fin:
             return path
         
-        #self.action(inicio, visited)
         for n in self.graph[inicio]:
             if n not in visited:
-                result = self.DFS(n, fin, path, visited)
+                result = self.results(n, fin, path, visited)
                 if result is not None:
                     return result
         path.pop()
         return None
 
 
-Test_Matrix = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 2, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 2, 2, 0, 0, 0],
-    [0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 2, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
-    [0, 2, 0, 0, 0, 2, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 2, 3, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-]
+# Test_Matrix = [
+#     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+#     [0, 0, 1, 0, 0, 2, 0, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 2, 2, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 0, 2, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
+#     [0, 2, 0, 0, 0, 2, 0, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 2, 3, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+# ]
 
-print("bfs")
-dfs = DFS(Test_Matrix)
-print(dfs.path)
-for x in dfs.MtoGtoM:
-    print(x)
+# print("bfs")
+# dfs = DFS(Test_Matrix)
+# print(dfs.path)
+# for x in dfs.MtoGtoM:
+#     print(x)
+
+# print('step cost: ', dfs.stepCost())
+# print('path cost: ', dfs.pathCost(dfs.path))
+
+# print('Pass test: ', dfs.test)
+
+# print(dfs.action(0))
+
+
