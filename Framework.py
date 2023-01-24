@@ -19,7 +19,7 @@ class Framework(ABC):
 
     # Función de goalTest(s) → {True, False}
     @abstractmethod
-    def goalTests(self) -> bool:
+    def goalTests(self, s) -> bool:
         pass
 
     # Función de costo de paso stepCost(s,a,s) → R

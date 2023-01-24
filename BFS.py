@@ -10,50 +10,13 @@ class BFS(Framework):
         self.graph = [[] for i in range((len(matrix)) * len(matrix))]
 
         inicio, fin, v = self.gen_relaciones(matrix)
-        for x in self.MtoGtoM:
-            print(x)
-        for x in self.graph:
-            print(x)
 
-        self.conseguir_ruta(inicio, fin, v)
+        self.results((inicio, fin), v)
 
     def añadir_conexión(self, fuente, destino):
 
         self.graph[fuente].append(destino)
         self.graph[destino].append(fuente)
-
-    def conseguir_ruta(self, inicio, fin, v):
-
-        # predecesor y distancia
-        pred = [0 for i in range(v)]
-        dist = [0 for i in range(v)]
-
-        if (
-            self.algoritmo(
-                relaciones=self.graph,
-                fuente=inicio,
-                destino=fin,
-                v=v,
-                pred=pred,
-                dist=dist,
-            )
-            == False
-        ):
-            print("no")
-
-        self.path = []
-        crawl = fin
-        self.path.append(crawl)
-
-        # CORREGIR CORREGIR
-        while pred[crawl] != -1:
-            self.path.append(pred[crawl])
-            crawl = pred[crawl]
-            # print(crawl)
-
-        print("Camino corto tamaño: ", dist[fin])
-        for x in range(len(self.path) - 1, -1, -1):
-            print(self.path[x])
 
     def gen_relaciones(self, matrix):
 
@@ -69,7 +32,7 @@ class BFS(Framework):
 
                 temp.append(pos)
 
-                if matrix[x][y] == 2:
+                if matrix[x][y] == 1:
                     # es el inicio
                     inicio = pos
 
@@ -77,17 +40,16 @@ class BFS(Framework):
                     # es el fin
                     fin = pos
 
-                if matrix[x][y] != 1:
+                if matrix[x][y] != 2:
 
                     # abajo
                     try:
-                        if matrix[x + 1][y] != 1:
+                        if matrix[x + 1][y] != 2:
                             # si no es una pared
                             qConected = ((x + 1) * len(matrix[x])) + (
                                 y
                             )  # Número del otro estado
                             self.añadir_conexión(pos, qConected)
-                            print("abajo :", pos, qConected)
                             vertices += 1
 
                     except:
@@ -97,13 +59,12 @@ class BFS(Framework):
 
                     # derecha
                     try:
-                        if matrix[x][y + 1] != 1:
+                        if matrix[x][y + 1] != 2:
                             # si no es una pared
                             qConected = (x * len(matrix[x])) + (
                                 y + 1
                             )  # Número del otro estado
                             self.añadir_conexión(pos, qConected)
-                            print("derecha :", pos, qConected)
                             vertices += 1
 
                     except:
@@ -117,7 +78,49 @@ class BFS(Framework):
 
         return (inicio, fin, vertices)
 
-    def algoritmo(self, relaciones, fuente, destino, v, pred, dist):
+    # Interface implementation
+
+    def action(self, s) -> str:
+        return super().action(s)
+
+    def results(self, s, a) -> int:
+
+        inicio, fin = s
+        v = a
+
+        # predecesor y distancia
+        pred = [0 for i in range(v)]
+        dist = [0 for i in range(v)]
+
+        s = (self.graph, inicio, fin, v, pred, dist)
+
+        if (
+            self.goalTests(s)
+            == False
+        ):
+            print("no")
+
+        self.path = []
+        crawl = fin
+        self.path.append(crawl)
+
+        # CORREGIR CORREGIR
+        while pred[crawl] != -1:
+            self.path.append(pred[crawl])
+            crawl = pred[crawl]
+            # print(crawl)
+
+        # print("Camino corto tamaño: ", dist[fin])
+        # for x in range(len(self.path) - 1, -1, -1):
+        #     print(self.path[x])
+
+        self.stepCost = dist[fin]
+
+        return self.path
+
+    def goalTests(self, s) -> bool:
+
+        relaciones, fuente, destino, v, pred, dist = s
 
         # Conjunto de todos los vértices adyacentes que se encuentran en la frontera
         cola = []
@@ -152,20 +155,41 @@ class BFS(Framework):
 
         return False
 
+    def stepCost(self) -> int:
+        step_cost = 0
+        for x in self.path:
+            step_cost += 1
+        return step_cost
+
+    def pathCost(self, s) -> int:
+        path_cost = 0
+        for x in s:
+            path_cost += 1
+        return path_cost
+
 
 Test_Matrix = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 2, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 2, 2, 0, 0, 0],
+    [0, 0, 1, 0, 0, 2, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 2, 2, 0, 0, 0],
     [0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 2, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
+    [0, 2, 0, 0, 0, 2, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 2, 3, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 2, 1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 1, 0, 0, 0, 3, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0, 1, 0],
 ]
 
 print("bfs")
 bfs = BFS(Test_Matrix)
-# print(bfs.graph)
+for x in bfs.MtoGtoM:
+    print(x)
+path = bfs.path
+for p in path:
+    print(p)
+cost = bfs.pathCost(path)
+print('path cost: ', cost)
+
+# stepCost = bfs.stepCost()
+print('stepCost: ', cost)
