@@ -1,4 +1,5 @@
 from Framework import Framework
+from collections import defaultdict
 
 class DFS(Framework):
     # Basado en https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/
@@ -7,7 +8,11 @@ class DFS(Framework):
         self.visitado = []
         self.stack = []
 
-        self.graph = [[] for i in range((len(matrix)) * len(matrix))]
+        self.graph = defaultdict(list)
+
+        inicio, fin, v = self.gen_relaciones(matrix)
+
+        self.path = self.DFS(inicio, fin)
 
     # def dfs(self, v, grafo):
     #     if v not in self.visitado:
@@ -25,6 +30,7 @@ class DFS(Framework):
 
     def añadir_conexión(self, u, v):
         self.graph[u].append(v)
+        self.graph[v].append(u)
 
     def gen_relaciones(self, matrix):
 
@@ -86,9 +92,6 @@ class DFS(Framework):
 
         return (inicio, fin, vertices)
 
-    def action(self, s) -> str:
-        return super().action(s)
-
     def results(self, s, a) -> int:
         return super().results(s, a)
 
@@ -100,6 +103,32 @@ class DFS(Framework):
 
     def pathCost(self, s) -> int:
         return super().pathCost(s)
+
+    def action(self, v, visited):
+        
+        visited.add(v)
+        print(v, end=" ")
+
+        for n in self.graph[v]:
+            if n not in visited:
+                self.action(n, visited)
+
+    def DFS(self, inicio, fin, path=[], visited = set()):
+
+        path.append(inicio)
+        visited.add(inicio)
+
+        if inicio == fin:
+            return path
+        
+        #self.action(inicio, visited)
+        for n in self.graph[inicio]:
+            if n not in visited:
+                result = self.DFS(n, fin, path, visited)
+                if result is not None:
+                    return result
+        path.pop()
+        return None
 
 
 Test_Matrix = [
@@ -116,5 +145,7 @@ Test_Matrix = [
 ]
 
 print("bfs")
-bfs = DFS(Test_Matrix)
-# print(bfs.graph)
+dfs = DFS(Test_Matrix)
+print(dfs.path)
+for x in dfs.MtoGtoM:
+    print(x)
