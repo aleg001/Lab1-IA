@@ -9,13 +9,10 @@ Diego Cordova
 
 """
 
-from math import sqrt
-from cmath import pi
-
 # ------ Arbol ------
 class Node:
   def __init__(self, x, y, value) -> None:
-    self.f = 0
+    self.f = 99999
     self.x = x
     self.y = y
     self.value = value
@@ -67,66 +64,73 @@ class Tree:
 
         NodeBuffer[y][x].succesors = succesors
 
+# ------ Heuristicas ------
+def _manhattan(arbol:Tree, actual:Node, last:Node) -> int:
+  '''
+  Heuristica 1: manhattan
+  Devuelve la distancia aprximada entre el nodo actual y la meta
+  '''
+  distances = []
+  for goal in arbol.goal:
+    h = abs(actual.x - goal.x) + abs(goal.y - actual.y)
+    distances.append(h)
+
+  return min(distances)
+
+def _diagnoal(arbol:Tree, actual:Node, last:Node):
+  '''
+  Heuristica 2: Distancia diagonal
+  Devuelve la distancia diagonal entre el nodo actual y el nodo final
+  '''
+  hs = []
+  for goal in arbol.goal:
+    x = abs(actual.x - goal.x)
+    y = abs(goal.y - actual.y)
+    h = (x + y) - 1 * min(x, y)
+    hs.append(h)
+  
+  return min(hs)
+
+
 # ------ Clase de busqueda ------
 
-# TODO implementar framework y hacer framework xd
-class AStar(object):
+from Framework import Framework
+
+class AStar(Framework):
   def __init__(self, path) -> None:
     ''' Define los atributos iniciales y construye la instancia del algoritmo de búsqueda '''
-    self.HEURISTIC = self._manhattan
+    self.HEURISTIC = _manhattan
     self.GOAL = None
     self.arbol = Tree(path)
-
-  # ------ Heuristicas ------
-  def _manhattan(self, arbol:Tree, actual:Node, last:Node) -> int:
-    '''
-    Heuristica 1: manhattan
-    Devuelve la distancia aprximada entre el nodo actual y la meta
-    '''
-    distances = []
-    for goal in arbol.goal:
-      h = abs(actual.x - goal.x) + abs(goal.y - actual.y)
-      distances.append(h)
-
-    return min(distances)
-
-  #
-  def _diagnoal(self, arbol:Tree, actual:Node, last:Node):
-    hs = []
-
-    for goal in arbol.goal:
-      x = abs(actual.x - goal.x)
-      y = abs(goal.y - actual.y)
-      d2 = sqrt(2)
-      h = (x + y) + (d2 - 2) * min(x, y)
-      hs.append(h)
-    
-    return min(hs)
+    self.open:list = [self.arbol.root]
+    self.closed:list = []
+    self.q:Node = self.arbol.root
+    self.grid = path
 
   # ------ Metodos ------
+  def goalTests(self) -> bool:
+    return self.GOAL != None
 
   def setHeuristic(self):
     ''' Define la heuristica a utilizar '''
-    if self.HEURISTIC == self._manhattan: self.HEURISTIC = self._diagnoal
-    if self.HEURISTIC == self._diagnoal: self.HEURISTIC = self._manhattan
+    if self.HEURISTIC == _manhattan: self.HEURISTIC = _diagnoal
+    if self.HEURISTIC == _diagnoal: self.HEURISTIC = _manhattan
 
-  def _qFinder(self, open:list[Node], closed: list[Node], q:Node):
+  def _qFinder(self):
     ''' Devuelve el nodo con menor f en la lista open '''
-    initial_q = q
-    for n in open:
-      if n in q.succesors:
-        q = n
+    initial_q = self.q
+    for n in self.open:
+      if n in self.q.succesors:
+        self.q = n
         break
 
-    for node in open:
+    for node in self.open:
       if (
-        node.f < q.f 
-        and node not in closed
+        node.f < self.q.f 
+        and node not in self.closed
         and node in initial_q.succesors
       ):
-        q = node
-
-    return q
+        self.q = node
 
   def _calculateG(self, actual:Node, last:Node) -> int:
     '''
@@ -136,55 +140,86 @@ class AStar(object):
     if actual.value == 2: return 9999999
     return abs(last.x - actual.x) + abs(actual.y - last.y)
 
-  def starSearch(self, grid):
-    open:list = [self.arbol.root]
-    closed:list = []
-    notGoal = True
-    q:Node = self.arbol.root
+  def stepCost(self, **kargs) -> int:
+    '''
+    Calcula el costo del siguiente paso (parametro f de un nodo)
+    '''
+    node = kargs['node']
+    g = self._calculateG(node, self.q)
+    h = self.HEURISTIC(self.arbol, node, self.q)
+    return g + h
 
-    while len(open) > 0 and notGoal:
-      q = self._qFinder(open, closed, q)
-      open.remove(q)
+  def pathCost(self, s) -> int:
+    ''' Devuelve el costo final del camino '''
+    cost = len(self.closed)
+    cost += 1 if self.GOAL != None else 0
+    return cost 
 
-      for node in q.succesors:
-        if node.value == 3:
-          notGoal = False
-          break
+  def action(self, s) -> str:
+    '''
+    Implementacion de algoritmo A*
+    Referencia: https://www.geeksforgeeks.org/a-search-algorithm/
+    '''
+    if self.GOAL != None: return
+    self._qFinder() # Escoje la q en la lista open con f mas bajo
+    self.open.remove(self.q) # Quita el nodo q de la lista open
 
-        g = self._calculateG(node, q)
-        h = self.HEURISTIC(self.arbol, node, q)
-        node.f = g + h
-        ignoreNode = False
+    # Se exploran todos los sucesores del nodo q
+    for node in self.q.succesors:
+      # Si el nodo objetivo es sucesor de q, se para la busqueda
+      if node.value == 3:
+        self.GOAL = node
+        break
 
-        for n in open:
-          if (
-            n.x == node.x 
-            and n.y == node.y
-            and n.f < node.f
-          ): 
-            ignoreNode = True
-            break
-        
-        if ignoreNode: continue
+      # Se calcula f para el nodo actual
+      actual_f = self.stepCost(node = node)
 
-        for n in closed:
-          if (
-            n.x == node.x 
-            and n.y == node.y
-            and n.f < node.f
-          ): 
-            ignoreNode = True
-            break
+      '''
+      Si el nodo esta en alguna de las listas: open y closed con un valor f menor al calculado en esta iteracion:
+        Se ignora este nodo para esta iteracion
+      sino:
+        se asigna la f calculada al nodo actual
+      '''
+      if (
+        (node in self.open and node.f < actual_f)
+        or (node in self.closed and node.f < actual_f)
+      ): continue
+      
+      node.f = actual_f
 
-        if ignoreNode: continue
-        if node not in open and node not in closed:
-          open.append(node)
-      closed.append(q)
+      # Si el nodo actual no esta en open ni closed, se agrega a open
+      if (
+        node not in self.open 
+        and node not in self.closed
+      ):
+        self.open.append(node)
 
-    return [(node.x, node.y) for node in closed]
+    # Se agrega q a closed ( es decir se agrega al camino recorrido )
+    self.closed.append(self.q)
+
+  def results(self, s, a) -> int:
+    '''
+    Devuelve el camino tomado hasta el momento de la ejecucion
+    '''
+    result = [(node.x, node.y) for node in self.closed]
+    if self.GOAL != None:
+      result.append((self.GOAL.x, self.GOAL.y))
+    return result
+
+  def results(self, s, a) -> int:
+    '''
+    Devuelve el grid con el camino tomada hasta el estado actual
+    '''
+    for node in self.closed:
+      if self.grid[node.y][node.x] == 0:
+        self.grid[node.y][node.x] = 4
+
+    return self.grid
 
 
-# pruebas ----------------------------------------------------------------------
+# ---------- Ejemplo de USO ----------
+
+'''
 path = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 1, 0, 0, 0, 2, 0, 0, 0, 0],
@@ -198,15 +233,13 @@ path = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ]
 
-path = [
-  [0, 0, 0, 0],
-  [0, 1, 2, 0],
-  [2, 2, 2, 0],
-  [0, 0, 0, 3],
-]
 
 A_instance = AStar(path)
-# A_instance.setHeuristic()
-res = A_instance.starSearch(path)
-print(res)
 
+while not A_instance.goalTests():
+  A_instance.action('')
+  print('pathCost:', A_instance.pathCost(''))
+  grid = A_instance.results('', '')
+  for row in grid:
+    print(row)
+'''
