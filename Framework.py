@@ -3,9 +3,31 @@ from abc import ABC, abstractmethod
 
 class Framework(ABC):
     @abstractmethod
-    def __init__(self, name: str):
-        self._name = name
+    def __init__(self):
+        pass
 
+    # Función de acción actions(s) →  {a1, a2,...,an}
     @abstractmethod
-    def name(self) -> str:
-        return self._name
+    def action(self, s) -> str:
+        pass
+
+    # Función de resultados results(s,a) → s
+    @abstractmethod
+    def results(self, s, a) -> int:
+        """Devuelve Array de nodos visitados en el estado actual"""
+        pass
+
+    # Función de goalTest(s) → {True, False}
+    @abstractmethod
+    def goalTests(self) -> bool:
+        pass
+
+    # Función de costo de paso stepCost(s,a,s) → R
+    @abstractmethod
+    def stepCost(self, **kargs) -> int:
+        pass
+
+    # Función de costo de ruta pathCost(s1, s2,...,sn) → R
+    @abstractmethod
+    def pathCost(self, s) -> int:
+        pass

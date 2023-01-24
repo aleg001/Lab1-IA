@@ -1,5 +1,6 @@
 class DFS:
     # Basado en https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/
+    # https://www.youtube.com/watch?v=sTRK9mQgYuc&t=0s&ab_channel=LearningOrbis
     def __init__(self, matrix):
         self.visitado = []
         self.stack = []
