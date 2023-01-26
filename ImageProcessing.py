@@ -70,13 +70,12 @@ def CargaImagenes(path):
     # Se agrega la data a la imagen
     endResultOpened.putdata(imagen4Colores)
     # Se despliega imagen
-    # endResultOpened.show()
+    endResultOpened.show()
     # Se guarda imagen
     endResultOpened.save(endResult)
 
     # Se convierte en un array la imagen. Referencia: https://thecleverprogrammer.com/2021/06/08/convert-image-to-array-using-python/#:~:text=Converting%20an%20Image%20to%20Array,pip%20install%20Pillow
     data = np.array(endResultOpened).tolist()
-    # print(data)
 
     dataNormal = []
 
@@ -97,9 +96,6 @@ def CargaImagenes(path):
                 dataNormal.append(3)
 
     # Por si necesitamos usar array de numpy!
-    listToArray = np.array(dataNormal)
+    listToArray = np.asmatrix(dataNormal)
 
-    return dataNormal
-
-
-CargaImagenes(path)
+    return listToArray

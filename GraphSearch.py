@@ -10,9 +10,9 @@ from BMP_RW import *
 from BFS import *
 from DFS import *
 
-
+print("Resultado: ")
 Resultado = CargaImagenes("l1")
-# print(Resultado)
+print(Resultado)
 
 BFSTest = BFS(Resultado)
 print(BFSTest.path)
