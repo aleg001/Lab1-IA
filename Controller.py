@@ -6,6 +6,7 @@ Maria Isabel Solano
 Diego Cordova
 
 """
+import time
 from PIL import Image
 from ImageProcessing import *
 from BMP_RW import *
