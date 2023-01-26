@@ -12,6 +12,7 @@ Diego Cordova
 
 from PIL import Image
 import numpy as np
+import pygame as pg
 
 # Se importa libreria para volver imagenes a pixeles
 from pixelate import *
@@ -21,7 +22,7 @@ from Colores import *
 
 
 # Constantes
-Pixel = 15
+Pixel = 20
 path = "l1"
 endResult = "result.bmp"
 
@@ -92,3 +93,7 @@ def CargaImagenes(path):
     listToArray = np.asmatrix(dataNormal)
 
     return listToArray
+
+
+def ExportarImagen(pygameInstance):
+    pg.image.save(pygameInstance, "../MazeSolucionado.bmp")
