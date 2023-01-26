@@ -31,7 +31,7 @@ for i in range(raiz):
     temp = []
     for j in range(raiz):
         temp.append(Resultado.item(count))
-        count + 1
+        count += 1
     ResultadoTemp.append(temp)
 
 Resultado = ResultadoTemp
@@ -41,7 +41,9 @@ print(BFSTest.path)
 # for i in BFSTest.MtoGtoM:
 #     print(i)
 
-# print("step cost: ", BFSTest.stepCost())
+print('gen info: ', BFSTest.inicio, BFSTest.fin)
+
+print("step cost: ", BFSTest.stepCost())
 print("path cost: ", BFSTest.pathCost(BFSTest.path))
 
 s = (BFSTest.graph, BFSTest.inicio, BFSTest.fin, BFSTest.v, [0 for i in range(BFSTest.v)], [0 for i in range(BFSTest.v)])

@@ -103,10 +103,10 @@ class BFS(Framework):
         pred = [0 for i in range(v)]
         dist = [0 for i in range(v)]
 
-        s = (self.graph, inicio, fin, v, pred, dist)
+        ss = (self.graph, inicio, fin, v, pred, dist)
 
-        if self.goalTests(s) == False:
-            print("no")
+        if self.goalTests(ss) == False:
+            print("No se ha encontrado un path")
 
         self.path = []
         crawl = fin
@@ -122,7 +122,7 @@ class BFS(Framework):
         # for x in range(len(self.path) - 1, -1, -1):
         #     print(self.path[x])
 
-        self.stepCost = dist[fin]
+        # self.stepCost = dist[fin]
 
         return self.path
 
@@ -199,7 +199,7 @@ class BFS(Framework):
 # cost = bfs.pathCost(path)
 # print('path cost: ', cost)
 
-# # stepCost = bfs.stepCost()
-# print('stepCost: ', cost)
+# stepCost = bfs.stepCost()
+# print('stepCost: ', stepCost)
 
 # bfs.action("")
