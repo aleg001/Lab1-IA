@@ -24,8 +24,6 @@ from Colores import *
 Pixel = 15
 path = "l1"
 endResult = "result.bmp"
-# Se llama a funcion de pixelate, recibiendo como parametro la imagen input, la imagen output y el tamaño de los pixeles.
-
 
 # Se define paleta de colores
 colores = [Colores.ROJO, Colores.VERDE, Colores.NEGRO, Colores.BLANCO]
@@ -34,6 +32,7 @@ colores = [Colores.ROJO, Colores.VERDE, Colores.NEGRO, Colores.BLANCO]
 def CargaImagenes(path):
     endResult = path + "result.bmp"
     path = path + ".bmp"
+    # Se llama a funcion de pixelate, recibiendo como parametro la imagen input, la imagen output y el tamaño de los pixeles.
     pixelate(path, endResult, Pixel)
     # La imagen resultado se carga
     endResultOpened = Image.open(endResult)
@@ -74,6 +73,7 @@ def CargaImagenes(path):
     # Se convierte en un array la imagen. Referencia: https://thecleverprogrammer.com/2021/06/08/convert-image-to-array-using-python/#:~:text=Converting%20an%20Image%20to%20Array,pip%20install%20Pillow
     data = np.array(endResultOpened).tolist()
 
+    # Se crea una lista vacia para almacenar los valores
     dataNormal = []
 
     # Proceso de recorrer los pixeles para obtener los colores y asignarlos en una nueva lista
@@ -86,7 +86,7 @@ def CargaImagenes(path):
             if (data[i][j][0]) == 254:
                 dataNormal.append(3)
             if (data[i][j][0]) == 41:
-                dataNormal.append(4)
+                dataNormal.append(1)
 
     # Se pasa a una matriz la lista
     listToArray = np.asmatrix(dataNormal)

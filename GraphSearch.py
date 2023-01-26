@@ -21,7 +21,7 @@ from AStar import *
 
 print("Resultado: ")
 Resultado = CargaImagenes("l1")
-print(Resultado)
+print(Resultado.matrix)
 
 BFSTest = BFS(Resultado)
 print(BFSTest.path)
