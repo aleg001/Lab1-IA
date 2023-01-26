@@ -1,8 +1,18 @@
+"""
+Lab#1
+------------------------------------
+Alejandro Gomez
+Maria Isabel Solano
+Diego Cordova
+
+"""
+
 from Framework import Framework
 from collections import defaultdict
 
+
 class DFS(Framework):
-    # Basado en 
+    # Basado en
     # https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/
     # https://www.youtube.com/watch?v=sTRK9mQgYuc&t=0s&ab_channel=LearningOrbis
     # https://stackabuse.com/courses/graphs-in-python-theory-and-implementation/lessons/depth-first-search-dfs-algorithm/
@@ -18,7 +28,6 @@ class DFS(Framework):
         self.path = self.results(inicio, fin)
 
         self.test = self.goalTests(inicio, fin)
-        
 
     def añadir_conexión(self, u, v):
         self.graph[u].append(v)
@@ -84,13 +93,13 @@ class DFS(Framework):
 
         return (inicio, fin, vertices)
 
-    def goalTests(self, inicio, fin, path=[], visited = set()) -> bool:
+    def goalTests(self, inicio, fin, path=[], visited=set()) -> bool:
         path.append(inicio)
         visited.add(inicio)
 
         if inicio == fin:
             return path
-        
+
         for n in self.graph[inicio]:
             if n not in visited:
                 result = self.goalTests(n, fin, path, visited)
@@ -111,8 +120,8 @@ class DFS(Framework):
             stepCost += 1
         return stepCost
 
-    def action(self, v, visited = set()):
-        
+    def action(self, v, visited=set()):
+
         visited.add(v)
 
         for n in self.graph[v]:
@@ -122,14 +131,14 @@ class DFS(Framework):
         return visited
 
     # Returns array path from inicio to fin
-    def results(self, inicio, fin, path=[], visited = set()):
+    def results(self, inicio, fin, path=[], visited=set()):
 
         path.append(inicio)
         visited.add(inicio)
 
         if inicio == fin:
             return path
-        
+
         for n in self.graph[inicio]:
             if n not in visited:
                 result = self.results(n, fin, path, visited)
@@ -164,5 +173,3 @@ class DFS(Framework):
 # print('Pass test: ', dfs.test)
 
 # print(dfs.action(0))
-
-

@@ -6,7 +6,12 @@ Maria Isabel Solano
 Diego Cordova
 
 """
-import time
+from PIL import Image
+from ImageProcessing import *
+from BMP_RW import *
+from BFS import *
+from DFS import *
+from AStar import *
 
 
 def maquinaEscribir(mensajito: str):

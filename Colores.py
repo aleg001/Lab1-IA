@@ -1,3 +1,11 @@
+"""
+Lab#1
+------------------------------------
+Alejandro Gomez
+Maria Isabel Solano
+Diego Cordova
+
+"""
 # Constantes de colores en una clase:
 class Colores:
     ROJO = (255, 0, 0)

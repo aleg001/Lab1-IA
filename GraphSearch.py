@@ -1,4 +1,12 @@
 """
+Lab#1
+------------------------------------
+Alejandro Gomez
+Maria Isabel Solano
+Diego Cordova
+
+"""
+"""
 Referencias:
 https://www.hackerearth.com/practice/notes/extracting-pixel-values-of-an-image-in-python/
 https://stackoverflow.com/questions/12995434/representing-and-solving-a-maze-given-an-image

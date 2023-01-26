@@ -1,3 +1,11 @@
+"""
+Lab#1
+------------------------------------
+Alejandro Gomez
+Maria Isabel Solano
+Diego Cordova
+
+"""
 from Framework import Framework
 
 
@@ -94,10 +102,7 @@ class BFS(Framework):
 
         s = (self.graph, inicio, fin, v, pred, dist)
 
-        if (
-            self.goalTests(s)
-            == False
-        ):
+        if self.goalTests(s) == False:
             print("no")
 
         self.path = []

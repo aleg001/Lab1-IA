@@ -1,3 +1,11 @@
+"""
+Lab#1
+------------------------------------
+Alejandro Gomez
+Maria Isabel Solano
+Diego Cordova
+
+"""
 from abc import ABC, abstractmethod
 
 

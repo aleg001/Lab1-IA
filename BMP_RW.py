@@ -1,3 +1,11 @@
+"""
+Lab#1
+------------------------------------
+Alejandro Gomez
+Maria Isabel Solano
+Diego Cordova
+
+"""
 from PIL import Image
 import struct
 import numpy
