@@ -18,10 +18,23 @@ from BMP_RW import *
 from BFS import *
 from DFS import *
 from AStar import *
+import math
 
 print("Resultado: ")
 Resultado = CargaImagenes("l1")
-print(Resultado.matrix)
+
+# Conversión de matriz de numpy a matrix con arrays
+ResultadoTemp = []
+raiz = int(math.sqrt(Resultado.size))
+count = 0
+for i in range(raiz):
+    temp = []
+    for j in range(raiz):
+        temp.append(Resultado.item(count))
+        count + 1
+    ResultadoTemp.append(temp)
+
+Resultado = ResultadoTemp
 
 BFSTest = BFS(Resultado)
 print(BFSTest.path)
