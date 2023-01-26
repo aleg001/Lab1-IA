@@ -37,9 +37,6 @@ def CargaImagenes(path):
     pixelate(path, endResult, Pixel)
     # La imagen resultado se carga
     endResultOpened = Image.open(endResult)
-    # Se cambia a paleta de colores y se cuantiza a estos
-    imagen = endResultOpened.convert("RGB", palette=colores)
-    im1 = endResultOpened.quantize(4)
 
     # Se obtiene la información de la imagen
     informacionFoto = endResultOpened.getdata()
@@ -82,20 +79,16 @@ def CargaImagenes(path):
     # Proceso de recorrer los pixeles para obtener los colores y asignarlos en una nueva lista
     for i in range(len(data)):
         for j in range(len(data[i])):
-
             if (data[i][j][0]) == 0:
                 dataNormal.append(0)
-
             if (data[i][j][0]) == 255:
                 dataNormal.append(1)
-
             if (data[i][j][0]) == 254:
                 dataNormal.append(2)
-
             if (data[i][j][0]) == 41:
                 dataNormal.append(3)
 
-    # Por si necesitamos usar array de numpy!
+    # Se pasa a una matriz la lista
     listToArray = np.asmatrix(dataNormal)
 
     return listToArray

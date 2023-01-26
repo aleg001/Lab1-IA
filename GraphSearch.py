@@ -9,6 +9,7 @@ from ImageProcessing import *
 from BMP_RW import *
 from BFS import *
 from DFS import *
+from AStar import *
 
 print("Resultado: ")
 Resultado = CargaImagenes("l1")
