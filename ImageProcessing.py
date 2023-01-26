@@ -82,11 +82,11 @@ def CargaImagenes(path):
             if (data[i][j][0]) == 0:
                 dataNormal.append(0)
             if (data[i][j][0]) == 255:
-                dataNormal.append(1)
-            if (data[i][j][0]) == 254:
                 dataNormal.append(2)
-            if (data[i][j][0]) == 41:
+            if (data[i][j][0]) == 254:
                 dataNormal.append(3)
+            if (data[i][j][0]) == 41:
+                dataNormal.append(4)
 
     # Se pasa a una matriz la lista
     listToArray = np.asmatrix(dataNormal)
