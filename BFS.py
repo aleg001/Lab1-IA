@@ -18,6 +18,9 @@ class BFS(Framework):
         self.graph = [[] for i in range((len(matrix)) * len(matrix))]
 
         inicio, fin, v = self.gen_relaciones(matrix)
+        self.inicio = inicio
+        self.fin = fin
+        self.v = v
 
         self.results((inicio, fin), v)
 

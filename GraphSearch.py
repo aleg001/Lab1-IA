@@ -38,10 +38,11 @@ Resultado = ResultadoTemp
 
 BFSTest = BFS(Resultado)
 print(BFSTest.path)
-for i in BFSTest.MtoGtoM:
-    print(i)
+# for i in BFSTest.MtoGtoM:
+#     print(i)
 
-print("step cost: ", BFSTest.stepCost())
+# print("step cost: ", BFSTest.stepCost())
 print("path cost: ", BFSTest.pathCost(BFSTest.path))
 
-print("Pass test: ", BFSTest.test)
+s = (BFSTest.graph, BFSTest.inicio, BFSTest.fin, BFSTest.v, [0 for i in range(BFSTest.v)], [0 for i in range(BFSTest.v)])
+print("Pass test: ", BFSTest.goalTests(s))
