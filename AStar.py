@@ -38,28 +38,20 @@ class Tree:
       for x in range(len(path)):
         succesors = []
         if x < len(path) - 1:
-          if path[y][x+1] != 2:
             succesors.append(NodeBuffer[y][x+1]) 
         if x > 0:
-          if path[y][x-1] != 2:
             succesors.append(NodeBuffer[y][x-1])
         if x < len(path) - 1 and y < len(path) - 1:
-          if path[y+1][x+1] != 2:
             succesors.append(NodeBuffer[y+1][x+1])
         if x > 0 and y < len(path) - 1:
-          if path[y+1][x-1] != 2:
             succesors.append(NodeBuffer[y+1][x-1])
         if y > 0 and x < len(path) - 1:
-          if path[y-1][x+1] != 2:
             succesors.append(NodeBuffer[y-1][x+1])
         if x > 0 and y > 0:
-          if path[y-1][x-1] != 2:
             succesors.append(NodeBuffer[y-1][x-1])
         if y > 0:
-          if path[y-1][x] != 2:
             succesors.append(NodeBuffer[y-1][x])
         if y < len(path) - 1:
-          if path[y+1][x] != 2:
             succesors.append(NodeBuffer[y+1][x])
 
         NodeBuffer[y][x].succesors = succesors
@@ -162,7 +154,8 @@ class AStar(Framework):
     '''
     if self.GOAL != None: return
     self._qFinder() # Escoje la q en la lista open con f mas bajo
-    self.open.remove(self.q) # Quita el nodo q de la lista open
+    if self.q in self.open:
+      self.open.remove(self.q) # Quita el nodo q de la lista open
 
     # Se exploran todos los sucesores del nodo q
     for node in self.q.succesors:
@@ -170,6 +163,8 @@ class AStar(Framework):
       if node.value == 3:
         self.GOAL = node
         break
+      elif node.value == 2:
+        continue
 
       # Se calcula f para el nodo actual
       actual_f = self.stepCost(node = node)
@@ -213,6 +208,9 @@ class AStar(Framework):
     for node in self.closed:
       if self.grid[node.y][node.x] == 0:
         self.grid[node.y][node.x] = 4
+    for node in self.open:
+      if self.grid[node.y][node.x] == 0:
+        self.grid[node.y][node.x] = 5
 
     return self.grid
 
