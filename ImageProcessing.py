@@ -22,7 +22,7 @@ from Colores import *
 
 
 # Constantes
-Pixel = 20
+Pixel = 15
 path = "l1"
 endResult = "result.bmp"
 
@@ -67,7 +67,7 @@ def CargaImagenes(path):
     # Se agrega la data a la imagen
     endResultOpened.putdata(imagen4Colores)
     # Se despliega imagen
-    endResultOpened.show()
+    # endResultOpened.show()
     # Se guarda imagen
     endResultOpened.save(endResult)
 

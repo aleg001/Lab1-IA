@@ -110,7 +110,6 @@ class AStar(Framework):
 
   def _qFinder(self):
     ''' Devuelve el nodo con menor f en la lista open '''
-    initial_q = self.q
     for n in self.open:
       if n in self.q.succesors:
         self.q = n
@@ -120,7 +119,6 @@ class AStar(Framework):
       if (
         node.f < self.q.f 
         and node not in self.closed
-        and node in initial_q.succesors
       ):
         self.q = node
 
@@ -205,12 +203,11 @@ class AStar(Framework):
     '''
     Devuelve el grid con el camino tomada hasta el estado actual
     '''
-    for node in self.closed:
-      if self.grid[node.y][node.x] == 0:
-        self.grid[node.y][node.x] = 4
     for node in self.open:
       if self.grid[node.y][node.x] == 0:
         self.grid[node.y][node.x] = 5
+    for node in self.closed:
+      self.grid[node.y][node.x] = 4
 
     return self.grid
 
