@@ -31,27 +31,10 @@ def SeleccionLaberinto():
     print("1. Laberinto #1")
     print("2. Laberinto #2")
     print("3. Laberinto #3")
-    print("4. Laberinto #4")
     print("5. Otro")
     print("6. Salir")
     choice1 = input("Ingrese su opción: ")
     return choice1
-
-
-while True:
-    choice = SeleccionLaberinto()
-    if choice == "1":
-        MenuOpciones("Lab1")
-    elif choice == "2":
-        print("Ejecutando DFS...")
-    elif choice == "3":
-        print("Ejecutando AStar...")
-
-    elif choice == "4":
-        print("Saliendo...")
-        break
-    else:
-        print("Opción inválida. Intente de nuevo.")
 
 
 def menu():
@@ -69,8 +52,10 @@ def MenuOpciones(laberinto):
         choice = menu()
         if choice == "1":
             print("Ejecutando BFS...")
+            runBFS(GraphSearch(laberinto))
         elif choice == "2":
             print("Ejecutando DFS...")
+            runDFS(GraphSearch(laberinto))
         elif choice == "3":
             print("Ejecutando AStar...")
             # La funcion de abajo corre el algoritmo con A*
@@ -80,3 +65,21 @@ def MenuOpciones(laberinto):
             break
         else:
             print("Opción inválida. Intente de nuevo.")
+
+
+while True:
+    choice = SeleccionLaberinto()
+    if choice == "1":
+        MenuOpciones("l1")
+    elif choice == "2":
+        MenuOpciones("l2")
+    elif choice == "3":
+        MenuOpciones("l3")
+    elif choice == "4":
+        archivo = input("Ingrese el nombre del archivo: (Sin extension BMP)")
+        MenuOpciones(archivo)
+    elif choice == "5":
+        print("Saliendo...")
+        break
+    else:
+        print("Opción inválida. Intente de nuevo.")
