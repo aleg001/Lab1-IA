@@ -80,6 +80,9 @@ def CargaImagenes(path):
     for i in range(len(data)):
         for j in range(len(data[i])):
 
+            r = data[i][j][0]
+            g = data[i][j][1]
+            b = data[i][j][2]
             if (data[i][j][0]) == 0:
                 # Negro
                 dataNormal.append(2)
@@ -89,7 +92,7 @@ def CargaImagenes(path):
             if (data[i][j][0]) == 254:
                 # Rojo
                 dataNormal.append(3)
-            if (data[i][j][0]) == 41:
+            if g > b and g > r:
                 # Verde
                 dataNormal.append(1)
 

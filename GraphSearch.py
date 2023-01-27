@@ -62,6 +62,7 @@ def GraphSearch(laberinto):
         else:
             pass
 
+    block = 15 if block == 30 else block
     grid2 = []
     cy = 0
 
