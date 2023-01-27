@@ -46,6 +46,7 @@ def GraphSearch(laberinto):
 
     grid2 = []
     cy = 0
+
     for y in range(int(raiz / block)):
         cx = 0
         temp_x = []
