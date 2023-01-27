@@ -38,6 +38,9 @@ def GraphSearch(laberinto):
 
     Resultado = ResultadoTemp
 
+    # Resultado = Resultado[::-1]
+    # Resultado = [[x for x in reversed(y)] for y in Resultado]
+
     block = 0
     for row in Resultado:
         if 1 in row:
