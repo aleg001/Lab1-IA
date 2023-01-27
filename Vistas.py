@@ -62,6 +62,8 @@ def runBFS(Resultado: list[list[int]]) -> None:
     W, H = (600, 600)
     blocksize = int(600 / len(Resultado))
     GRID = Resultado
+    # Llamar a BFS
+    # PENDIENTE
     pygame.image.save(screen, "BFS.png")
     Image.open("BFS.png").show()
 
@@ -70,5 +72,8 @@ def runDFS(Resultado: list[list[int]]) -> None:
     W, H = (600, 600)
     blocksize = int(600 / len(Resultado))
     GRID = Resultado
+    # Llamar a DFS
+    # PENDIENTE
+
     pygame.image.save(screen, "DFS.png")
     Image.open("DFS.png").show()
