@@ -67,7 +67,7 @@ def CargaImagenes(path):
     # Se agrega la data a la imagen
     endResultOpened.putdata(imagen4Colores)
     # Se despliega imagen
-    # endResultOpened.show()
+    endResultOpened.show()
     # Se guarda imagen
     endResultOpened.save(endResult)
 

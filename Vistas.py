@@ -1,5 +1,6 @@
 import pygame
 from AStar import AStar
+from PIL import Image
 
 
 def draw_rect(x, y, color, screen, blocksize, H):
@@ -38,9 +39,7 @@ def runAstar(Resultado: list[list[int]]) -> None:
     screen = pygame.display.set_mode((W, H))
     pygame.init()
 
-    actualgrid, nextgrid = 0, 1
     running = True
-    changes = []
 
     paint_grid(GRID, screen, blocksize, H)
     pygame.display.update()
@@ -54,15 +53,22 @@ def runAstar(Resultado: list[list[int]]) -> None:
                     GRID = A_instance.results("", "")
                 paint_grid(GRID, screen, blocksize, H)
                 pygame.display.update()
+    # Save last frame as image:
+    pygame.image.save(screen, "AStar.png")
+    Image.open("AStar.png").show()
 
 
 def runBFS(Resultado: list[list[int]]) -> None:
     W, H = (600, 600)
     blocksize = int(600 / len(Resultado))
     GRID = Resultado
+    pygame.image.save(screen, "BFS.png")
+    Image.open("BFS.png").show()
 
 
 def runDFS(Resultado: list[list[int]]) -> None:
     W, H = (600, 600)
     blocksize = int(600 / len(Resultado))
     GRID = Resultado
+    pygame.image.save(screen, "DFS.png")
+    Image.open("DFS.png").show()

@@ -21,8 +21,6 @@ from AStar import *
 import math
 from Vistas import *
 
-print("Resultado: ")
-
 
 def GraphSearch(laberinto):
     Resultado = CargaImagenes(laberinto)
