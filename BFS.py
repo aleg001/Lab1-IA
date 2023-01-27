@@ -12,6 +12,8 @@ from Framework import Framework
 class BFS(Framework):
     # Basado en https://www.geeksforgeeks.org/shortest-path-unweighted-graph/
     def __init__(self, matrix):
+        self.originalMatrix = matrix
+
         self.visited = []
         self.queue = []
 
@@ -169,6 +171,28 @@ class BFS(Framework):
         return path_cost
 
 
+    def getFullMatrix(self):
+        for x in range(len(self.originalMatrix)):
+            for y in range(len(self.originalMatrix[x])):
+
+                # Gracias a la matriz MtoGtoM no es necesario
+                # hacer el cálculo inverso para conseguir la 
+                # posición de cada objeto en la matriz, por lo
+                # que ahora solo se revisa si este valore está
+                # en la matriz de posiciones y el array path. 
+                # Si lo está agrega un número 5 para poder
+                # dibujar el path. 
+
+                if self.MtoGtoM[x][y] == self.inicio or self.MtoGtoM[x][y] == self.fin:
+                    pass
+
+                elif self.MtoGtoM[x][y] in self.path:
+                    self.originalMatrix[x][y] = 5
+
+        return self.originalMatrix
+
+
+
 # Test_Matrix = [
 #     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 #     [0, 0, 1, 0, 0, 2, 0, 0, 0, 0],
@@ -196,3 +220,6 @@ class BFS(Framework):
 # print('stepCost: ', stepCost)
 
 # bfs.action("")
+
+# for x in bfs.getFullMatrix():
+#     print(x)

@@ -64,9 +64,12 @@ def runAstar(Resultado: list[list[int]]) -> None:
 def runBFS(Resultado: list[list[int]]) -> None:
     W, H = (600, 600)
     blocksize = int(600 / len(Resultado))
-    GRID = Resultado
+    
 
     BFS_Instance = BFS(Resultado)
+    Resultado = BFS_Instance.getFullMatrix()
+
+    GRID = Resultado
 
     pygame.display.set_caption("Resolución de laberinto")
     screen = pygame.display.set_mode((W, H))
@@ -81,9 +84,19 @@ def runBFS(Resultado: list[list[int]]) -> None:
             if event.type == pygame.QUIT:
                 running = False
             elif event.type in [pygame.KEYDOWN]:
-                if not BFS_Instance.goalTests():
+                s = (
+                    BFS_Instance.graph,
+                    BFS_Instance.inicio,
+                    BFS_Instance.fin,
+                    BFS_Instance.v,
+                    [0 for i in range(BFS_Instance.v)],
+                    [0 for i in range(BFS_Instance.v)]
+
+                )
+                if not BFS_Instance.goalTests(s):
                     BFS_Instance.action("")
                     GRID = BFS_Instance.results("", "")
+                    print("Path not found")
                 paint_grid(GRID, screen, blocksize, H)
                 pygame.display.update()
     pygame.image.save(screen, "BFS.png")
@@ -93,9 +106,11 @@ def runBFS(Resultado: list[list[int]]) -> None:
 def runDFS(Resultado: list[list[int]]) -> None:
     W, H = (600, 600)
     blocksize = int(600 / len(Resultado))
-    GRID = Resultado
 
     DFS_Instance = DFS(Resultado)
+
+    Resultado = DFS_Instance.getFullMatrix()
+    GRID = Resultado
 
     pygame.display.set_caption("Resolución de laberinto")
     screen = pygame.display.set_mode((W, H))
@@ -110,7 +125,7 @@ def runDFS(Resultado: list[list[int]]) -> None:
             if event.type == pygame.QUIT:
                 running = False
             elif event.type in [pygame.KEYDOWN]:
-                if not DFS_Instance.goalTests():
+                if not DFS_Instance.goalTests(DFS_Instance.inicio, DFS_Instance.fin):
                     DFS_Instance.action("")
                     GRID = DFS_Instance.results("", "")
                 paint_grid(GRID, screen, blocksize, H)
