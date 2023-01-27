@@ -12,6 +12,8 @@ from Framework import Framework
 class BFS(Framework):
     # Basado en https://www.geeksforgeeks.org/shortest-path-unweighted-graph/
     def __init__(self, matrix):
+        # matrix = self.rotateMatrix(matrix)
+
         self.originalMatrix = matrix
 
         self.visited = []
@@ -191,6 +193,17 @@ class BFS(Framework):
 
         return self.originalMatrix
 
+    def rotateMatrix(self, matrix):
+
+        MTemp = []
+        for x in range(len(matrix)):
+            temp = []
+            for y in range(len(matrix[x])):
+                temp.append(matrix[y][x])
+            MTemp.append(temp)
+            print(len(temp))
+
+        return MTemp
 
 
 # Test_Matrix = [
