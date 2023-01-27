@@ -19,6 +19,7 @@ from BFS import *
 from DFS import *
 from AStar import *
 import math
+from Vistas import *
 
 print("Resultado: ")
 Resultado = CargaImagenes("l1")
@@ -34,32 +35,38 @@ for i in range(raiz):
         count += 1
     ResultadoTemp.append(temp)
 
-Resultado = ResultadoTemp
+def GraphSearch(laberinto):
+    Resultado = CargaImagenes(laberinto)
 
-print("Primera fila ",Resultado[0])
+    # Conversión de matriz de numpy a matrix con arrays
+    ResultadoTemp = []
+    raiz = int(math.sqrt(Resultado.size))
+    count = 0
+    for i in range(raiz):
+        temp = []
+        for j in range(raiz):
+            temp.append(Resultado.item(count))
+            count += 1
+        ResultadoTemp.append(temp)
 
-BFSTest = BFS(Resultado)
-print(BFSTest.path)
-# for i in BFSTest.MtoGtoM:
-#     print(i)
- 
-print("Caminos de 42659: ", BFSTest.graph[42659])
-print("Caminos de 42660: ", BFSTest.graph[42660])
-print("valor de 42660: ", R.item(42660))
-print("Caminos de 264929: ", BFSTest.graph[264929])
+    Resultado = ResultadoTemp
 
+    block = 0
+    for row in Resultado:
+        if 1 in row:
+            block = row.count(1)
+            break
 
-print('gen info: ', BFSTest.inicio, BFSTest.fin)
+    grid2 = []
+    cy = 0
+    for y in range(int(raiz / block)):
+        cx = 0
+        temp_x = []
+        for x in range(int(raiz / block)):
+            temp_x.append(Resultado[cy][cx])
+            cx += block
+        grid2.append(temp_x)
+        cy += block
 
-print("step cost: ", BFSTest.stepCost())
-print("path cost: ", BFSTest.pathCost(BFSTest.path))
-
-s = (BFSTest.graph, BFSTest.inicio, BFSTest.fin, BFSTest.v, [0 for i in range(BFSTest.v)], [0 for i in range(BFSTest.v)])
-print("Pass test: ", BFSTest.goalTests(s))
-
-# for x in Resultado:
-#     Temp = ""
-#     for y in Resultado:
-#         Temp += '.'
-
-#     print(Temp)
+    Resultado = grid2
+    return Resultado

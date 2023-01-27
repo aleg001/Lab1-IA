@@ -12,6 +12,7 @@ Diego Cordova
 
 from PIL import Image
 import numpy as np
+import pygame as pg
 
 # Se importa libreria para volver imagenes a pixeles
 from pixelate import *
@@ -80,9 +81,9 @@ def CargaImagenes(path):
     for i in range(len(data)):
         for j in range(len(data[i])):
             if (data[i][j][0]) == 0:
-                dataNormal.append(0)
-            if (data[i][j][0]) == 255:
                 dataNormal.append(2)
+            if (data[i][j][0]) == 255:
+                dataNormal.append(0)
             if (data[i][j][0]) == 254:
                 dataNormal.append(3)
             if (data[i][j][0]) == 41:
@@ -92,3 +93,7 @@ def CargaImagenes(path):
     listToArray = np.asmatrix(dataNormal)
 
     return listToArray
+
+
+def ExportarImagen(pygameInstance):
+    pg.image.save(pygameInstance, "../MazeSolucionado.bmp")
