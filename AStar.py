@@ -63,6 +63,10 @@ def _manhattan(arbol: Tree, actual: Node, last: Node) -> int:
     """
     Heuristica 1: manhattan
     Devuelve la distancia aprximada entre el nodo actual y la meta
+    --------------------
+    Justificacion:
+    Esta heurística es conveniente ya que toma en cuenta la posición a la que se
+    quiere llegar.
     """
     distances = []
     for goal in arbol.goal:
@@ -76,6 +80,10 @@ def _diagnoal(arbol: Tree, actual: Node, last: Node):
     """
     Heuristica 2: Distancia diagonal
     Devuelve la distancia diagonal entre el nodo actual y el nodo final
+    --------------------
+    Justificacion:
+    Esta eurística toma en cuenta la distancia y dirección del objetivo final
+    por lo tanto ayuda bastante a guiar el trazado del camino a tomar
     """
     hs = []
     for goal in arbol.goal:
