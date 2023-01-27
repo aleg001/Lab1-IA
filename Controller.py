@@ -38,6 +38,22 @@ def SeleccionLaberinto():
     return choice1
 
 
+while True:
+    choice = SeleccionLaberinto()
+    if choice == "1":
+        MenuOpciones("Lab1")
+    elif choice == "2":
+        print("Ejecutando DFS...")
+    elif choice == "3":
+        print("Ejecutando AStar...")
+
+    elif choice == "4":
+        print("Saliendo...")
+        break
+    else:
+        print("Opción inválida. Intente de nuevo.")
+
+
 def menu():
     print("Seleccione una opción:")
     print("1. BFS")
@@ -48,18 +64,19 @@ def menu():
     return choice
 
 
-while True:
-    choice = menu()
-    if choice == "1":
-        print("Ejecutando BFS...")
-    elif choice == "2":
-        print("Ejecutando DFS...")
-    elif choice == "3":
-        print("Ejecutando AStar...")
-        # La funcion de abajo corre el algoritmo con A*
-        runAstar(GraphSearch("l1"))
-    elif choice == "4":
-        print("Saliendo...")
-        break
-    else:
-        print("Opción inválida. Intente de nuevo.")
+def MenuOpciones(laberinto):
+    while True:
+        choice = menu()
+        if choice == "1":
+            print("Ejecutando BFS...")
+        elif choice == "2":
+            print("Ejecutando DFS...")
+        elif choice == "3":
+            print("Ejecutando AStar...")
+            # La funcion de abajo corre el algoritmo con A*
+            runAstar(GraphSearch(laberinto))
+        elif choice == "4":
+            print("Saliendo...")
+            break
+        else:
+            print("Opción inválida. Intente de nuevo.")

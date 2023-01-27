@@ -2,6 +2,9 @@ import pygame
 from AStar import AStar
 from PIL import Image
 
+from BFS import BFS
+from DFS import DFS
+
 
 def draw_rect(x, y, color, screen, blocksize, H):
     """Draws a cube of size blockize-1 in the grid"""
@@ -62,8 +65,27 @@ def runBFS(Resultado: list[list[int]]) -> None:
     W, H = (600, 600)
     blocksize = int(600 / len(Resultado))
     GRID = Resultado
-    # Llamar a BFS
-    # PENDIENTE
+
+    BFS_Instance = BFS(Resultado)
+
+    pygame.display.set_caption("Resolución de laberinto")
+    screen = pygame.display.set_mode((W, H))
+    pygame.init()
+
+    running = True
+
+    paint_grid(GRID, screen, blocksize, H)
+    pygame.display.update()
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            elif event.type in [pygame.KEYDOWN]:
+                if not BFS_Instance.goalTests():
+                    BFS_Instance.action("")
+                    GRID = BFS_Instance.results("", "")
+                paint_grid(GRID, screen, blocksize, H)
+                pygame.display.update()
     pygame.image.save(screen, "BFS.png")
     Image.open("BFS.png").show()
 
@@ -72,8 +94,27 @@ def runDFS(Resultado: list[list[int]]) -> None:
     W, H = (600, 600)
     blocksize = int(600 / len(Resultado))
     GRID = Resultado
-    # Llamar a DFS
-    # PENDIENTE
+
+    DFS_Instance = DFS(Resultado)
+
+    pygame.display.set_caption("Resolución de laberinto")
+    screen = pygame.display.set_mode((W, H))
+    pygame.init()
+
+    running = True
+
+    paint_grid(GRID, screen, blocksize, H)
+    pygame.display.update()
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            elif event.type in [pygame.KEYDOWN]:
+                if not DFS_Instance.goalTests():
+                    DFS_Instance.action("")
+                    GRID = DFS_Instance.results("", "")
+                paint_grid(GRID, screen, blocksize, H)
+                pygame.display.update()
 
     pygame.image.save(screen, "DFS.png")
     Image.open("DFS.png").show()
