@@ -66,8 +66,7 @@ def CargaImagenes(path):
 
     # Se agrega la data a la imagen
     endResultOpened.putdata(imagen4Colores)
-    # Se despliega imagen
-    endResultOpened.show()
+
     # Se guarda imagen
     endResultOpened.save(endResult)
 
@@ -80,14 +79,23 @@ def CargaImagenes(path):
     # Proceso de recorrer los pixeles para obtener los colores y asignarlos en una nueva lista
     for i in range(len(data)):
         for j in range(len(data[i])):
+
             if (data[i][j][0]) == 0:
+                # Negro
                 dataNormal.append(2)
             if (data[i][j][0]) == 255:
+                # blanco
                 dataNormal.append(0)
             if (data[i][j][0]) == 254:
+                # Rojo
                 dataNormal.append(3)
             if (data[i][j][0]) == 41:
+                # Verde
                 dataNormal.append(1)
+
+            if (data[i][j][0]) == 5:
+                # Negro
+                dataNormal.append(2)
 
     # Se pasa a una matriz la lista
     listToArray = np.asmatrix(dataNormal)

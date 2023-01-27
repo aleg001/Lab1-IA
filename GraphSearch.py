@@ -43,11 +43,14 @@ def GraphSearch(laberinto):
         if 1 in row:
             block = row.count(1)
             break
+        else:
+            pass
 
     grid2 = []
     cy = 0
 
     for y in range(int(raiz / block)):
+
         cx = 0
         temp_x = []
         for x in range(int(raiz / block)):
