@@ -51,16 +51,22 @@ def GraphSearch(laberinto):
 
     Resultado = ResultadoTemp
 
+    # Resultado = Resultado[::-1]
+    # Resultado = [[x for x in reversed(y)] for y in Resultado]
+
     block = 0
     for row in Resultado:
         if 1 in row:
             block = row.count(1)
             break
+        else:
+            pass
 
     grid2 = []
     cy = 0
 
     for y in range(int(raiz / block)):
+
         cx = 0
         temp_x = []
         for x in range(int(raiz / block)):

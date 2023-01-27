@@ -31,8 +31,8 @@ def SeleccionLaberinto():
     print("1. Laberinto #1")
     print("2. Laberinto #2")
     print("3. Laberinto #3")
-    print("5. Otro")
-    print("6. Salir")
+    print("4. Otro")
+    print("5. Salir")
     choice1 = input("Ingrese su opción: ")
     return choice1
 
