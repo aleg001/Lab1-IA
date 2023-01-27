@@ -22,7 +22,7 @@ import math
 
 print("Resultado: ")
 Resultado = CargaImagenes("l1")
-
+R = Resultado 
 # Conversión de matriz de numpy a matrix con arrays
 ResultadoTemp = []
 raiz = int(math.sqrt(Resultado.size))
@@ -36,10 +36,18 @@ for i in range(raiz):
 
 Resultado = ResultadoTemp
 
+print("Primera fila ",Resultado[0])
+
 BFSTest = BFS(Resultado)
 print(BFSTest.path)
 # for i in BFSTest.MtoGtoM:
 #     print(i)
+ 
+print("Caminos de 42659: ", BFSTest.graph[42659])
+print("Caminos de 42660: ", BFSTest.graph[42660])
+print("valor de 42660: ", R.item(42660))
+print("Caminos de 264929: ", BFSTest.graph[264929])
+
 
 print('gen info: ', BFSTest.inicio, BFSTest.fin)
 
@@ -48,3 +56,10 @@ print("path cost: ", BFSTest.pathCost(BFSTest.path))
 
 s = (BFSTest.graph, BFSTest.inicio, BFSTest.fin, BFSTest.v, [0 for i in range(BFSTest.v)], [0 for i in range(BFSTest.v)])
 print("Pass test: ", BFSTest.goalTests(s))
+
+# for x in Resultado:
+#     Temp = ""
+#     for y in Resultado:
+#         Temp += '.'
+
+#     print(Temp)

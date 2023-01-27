@@ -116,13 +116,6 @@ class BFS(Framework):
         while pred[crawl] != -1:
             self.path.append(pred[crawl])
             crawl = pred[crawl]
-            # print(crawl)
-
-        # print("Camino corto tamaño: ", dist[fin])
-        # for x in range(len(self.path) - 1, -1, -1):
-        #     print(self.path[x])
-
-        # self.stepCost = dist[fin]
 
         return self.path
 
@@ -133,7 +126,7 @@ class BFS(Framework):
         # Conjunto de todos los vértices adyacentes que se encuentran en la frontera
         cola = []
 
-        # Conjutno de vértices ya visitados.
+        # Conjunto de vértices ya visitados.
         visitados = [False for i in range(v)]
 
         for i in range(v):
